@@ -4,45 +4,21 @@ import java.io.PrintStream;
 
 public abstract class AbstractLogger implements Logger {
 
+    private Formatter formatter = new Formatter();
+
     private Level defaultLevel = Level.INFO;
-    private PrintStream printStream = System.out;
-    private boolean endWithNewLine = true;
+    private PrintStream printStream;
 
     public AbstractLogger(PrintStream printStream) {
         this.printStream = printStream;
     }
 
-    public AbstractLogger(Level defaultLevel) {
-        this.defaultLevel = defaultLevel;
-    }
-
-    public AbstractLogger(boolean endWithNewLine) {
-        this.endWithNewLine = endWithNewLine;
-    }
-
-    public AbstractLogger(Level defaultLevel, PrintStream printStream) {
-        this.defaultLevel = defaultLevel;
-        this.printStream = printStream;
-    }
-
-    public AbstractLogger(Level defaultLevel, boolean endWithNewLine) {
-        this.defaultLevel = defaultLevel;
-        this.endWithNewLine = endWithNewLine;
-    }
-
-    public AbstractLogger(PrintStream printStream, boolean endWithNewLine) {
-        this.printStream = printStream;
-        this.endWithNewLine = endWithNewLine;
-    }
-
     @Override
     public void print(Level level, String message, Object... args) {
         if (getDefaultLevel().ordinal() <= level.ordinal()) {
-            StringBuilder sb = new StringBuilder(message);
-            if (isEndWithNewLine()) {
-                sb.append('\n');
-            }
-            printStream.printf(sb.toString(), args);
+            printStream.print(
+                    formatter.format(level, message, args)
+            );
         }
     }
 
@@ -97,13 +73,12 @@ public abstract class AbstractLogger implements Logger {
     }
 
     @Override
-    public boolean isEndWithNewLine() {
-        return endWithNewLine;
+    public String getPattern() {
+        return formatter.getPattern();
     }
 
     @Override
-    public void setEndWithNewLine(boolean endWithNewLine) {
-        this.endWithNewLine = endWithNewLine;
+    public void setPattern(String pattern) {
+        formatter.setPattern(pattern);
     }
-
 }

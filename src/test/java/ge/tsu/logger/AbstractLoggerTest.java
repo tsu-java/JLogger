@@ -3,7 +3,6 @@ package ge.tsu.logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
@@ -20,8 +19,9 @@ class AbstractLoggerTest {
     void setUp() {
         byteArrayOutputStream = new ByteArrayOutputStream();
         printStream = new PrintStream(byteArrayOutputStream, true);
-        logger = new AbstractLogger(printStream, false) {
+        logger = new AbstractLogger(printStream) {
         };
+        logger.setPattern("%message%");
     }
 
     @AfterEach

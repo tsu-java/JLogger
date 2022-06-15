@@ -26,7 +26,7 @@ public interface Logger {
 
     void setPrintStream(PrintStream printStream);
 
-    boolean isEndWithNewLine();
+    String getPattern();
 
-    void setEndWithNewLine(boolean endWithNewLine);
+    void setPattern(String pattern);
 }
