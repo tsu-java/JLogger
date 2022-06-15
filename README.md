@@ -11,7 +11,7 @@ A simple logging library for Java.
 ## Usage Example
 ```java
 public class MyClass {
-    private static final Logger log = new ConsoleLogger();
+    private static final Logger log = new ConsoleLogger(MyClass.class);
     
     public static void main(String[] args) {
         log.info("My application now has a logger :)");
