@@ -6,18 +6,24 @@ public abstract class AbstractLogger implements Logger {
 
     private Formatter formatter = new Formatter();
 
+    private String name;
     private Level defaultLevel = Level.INFO;
     private PrintStream printStream;
 
-    public AbstractLogger(PrintStream printStream) {
+    public AbstractLogger(String name, PrintStream printStream) {
+        this.name = name;
         this.printStream = printStream;
+    }
+
+    public <T> AbstractLogger(Class<T> aClass, PrintStream printStream) {
+        this(aClass.getName(), printStream);
     }
 
     @Override
     public void print(Level level, String message, Object... args) {
         if (getDefaultLevel().ordinal() <= level.ordinal()) {
             printStream.print(
-                    formatter.format(level, message, args)
+                    formatter.format(name, level, message, args)
             );
         }
     }
@@ -50,6 +56,16 @@ public abstract class AbstractLogger implements Logger {
     @Override
     public void fatal(String message, Object... args) {
         print(Level.FATAL, message, args);
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

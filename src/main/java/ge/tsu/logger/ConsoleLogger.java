@@ -2,17 +2,21 @@ package ge.tsu.logger;
 
 public class ConsoleLogger extends AbstractLogger {
 
-    public ConsoleLogger() {
-        super(System.out);
+    public ConsoleLogger(String name) {
+        super(name, System.out);
     }
 
-    public ConsoleLogger(Level defaultLevel) {
-        this();
+    public <T> ConsoleLogger(Class<T> aClass) {
+        super(aClass, System.out);
+    }
+
+    public ConsoleLogger(String name, Level defaultLevel) {
+        this(name);
         setDefaultLevel(defaultLevel);
     }
 
-    @Override
-    public void print(Level level, String message, Object... args) {
-        super.print(level, message, args);
+    public <T> ConsoleLogger(Class<T> aClass, Level defaultLevel) {
+        this(aClass);
+        setDefaultLevel(defaultLevel);
     }
 }

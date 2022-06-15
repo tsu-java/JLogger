@@ -18,6 +18,10 @@ public interface Logger {
 
     void fatal(String message, Object... args);
 
+    String getName();
+
+    void setName(String name);
+
     Level getDefaultLevel();
 
     void setDefaultLevel(Level defaultLevel);

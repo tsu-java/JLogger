@@ -19,7 +19,7 @@ class AbstractLoggerTest {
     void setUp() {
         byteArrayOutputStream = new ByteArrayOutputStream();
         printStream = new PrintStream(byteArrayOutputStream, true);
-        logger = new AbstractLogger(printStream) {
+        logger = new AbstractLogger(AbstractLoggerTest.class, printStream) {
         };
         logger.setPattern("%message%");
     }

@@ -2,11 +2,13 @@ package ge.tsu.logger;
 
 public class Formatter {
 
+    private static final String NAME_PATTERN = "%name%";
     private static final String LEVEL_PATTERN = "%level%";
     private static final String MESSAGE_PATTERN = "%message%";
     private static final String NEWLINE_PATTERN = "%n%";
+    private static final String DEFAULT_PATTERN = "%name% [%level%]: %message%%n%";
 
-    private String pattern = "[%level%]: %message%%n%";
+    private String pattern = DEFAULT_PATTERN;
 
     public String getPattern() {
         return pattern;
@@ -16,11 +18,16 @@ public class Formatter {
         this.pattern = pattern;
     }
 
-    public String format(Level level, String message, Object... args) {
+    public String format(String name, Level level, String message, Object... args) {
         if (args.length > 0) {
             message = String.format(message, args);
         }
         StringBuilder sb = new StringBuilder(pattern);
+
+        int nameIndex;
+        while ((nameIndex = sb.indexOf(NAME_PATTERN)) != -1) {
+            sb.replace(nameIndex, nameIndex + NAME_PATTERN.length(), name);
+        }
 
         int levelIndex;
         while ((levelIndex = sb.indexOf(LEVEL_PATTERN)) != -1) {
