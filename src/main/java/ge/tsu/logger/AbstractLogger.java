@@ -1,5 +1,6 @@
 package ge.tsu.logger;
 
+import java.io.OutputStream;
 import java.io.PrintStream;
 
 public abstract class AbstractLogger implements Logger {
@@ -8,15 +9,17 @@ public abstract class AbstractLogger implements Logger {
 
     private String name;
     private Level defaultLevel = Level.INFO;
+    private OutputStream outputStream;
     private PrintStream printStream;
 
-    public AbstractLogger(String name, PrintStream printStream) {
+    public AbstractLogger(String name, OutputStream outputStream) {
         this.name = name;
-        this.printStream = printStream;
+        this.outputStream = outputStream;
+        printStream = new PrintStream(outputStream);
     }
 
-    public <T> AbstractLogger(Class<T> aClass, PrintStream printStream) {
-        this(aClass.getName(), printStream);
+    public <T> AbstractLogger(Class<T> aClass, OutputStream outputStream) {
+        this(aClass.getName(), outputStream);
     }
 
     @Override
