@@ -4,6 +4,7 @@ A simple logging library for Java.
 ## Features
 * Logging level
 * Message Formatter
+* File Logger
 
 ## Implementations
 * Console Logger
