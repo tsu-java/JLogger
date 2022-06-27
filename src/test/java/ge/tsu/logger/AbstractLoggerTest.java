@@ -1,13 +1,15 @@
 package ge.tsu.logger;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AbstractLoggerTest {
 
@@ -40,12 +42,18 @@ class AbstractLoggerTest {
         }
     }
 
+    @Test
+    void setName() {
+        assertEquals(AbstractLoggerTest.class.getName(), logger.getName());
+    }
+
     @ParameterizedTest
     @EnumSource(names = {"TRACE", "DEBUG", "INFO", "WARN", "ERROR", "FATAL"})
     void print(Level level) {
         logger.setDefaultLevel(level);
         logger.print(level, "Testing level %s message!", level);
         String actualMessage = byteArrayOutputStream.toString();
-        Assertions.assertEquals(String.format("Testing level %s message!", level), actualMessage);
+        assertEquals(String.format("Testing level %s message!", level), actualMessage);
     }
+
 }
